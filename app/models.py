@@ -15,7 +15,7 @@ class User (UserMixin,db.Model):
     bio = db.Column(db.String(255),default ='My default Bio')
     profile_pic_path = db.Column(db.String(150))
     hashed_password = db.Column(db.String(255),nullable = False)
-    blog = db.relationship('Blog', backref='user', lazy='dynamic')
+    blogs = db.relationship('Blog', backref='user', lazy='dynamic')
     comment = db.relationship('Comment', backref='user', lazy='dynamic')
     
     @property
@@ -41,13 +41,13 @@ class User (UserMixin,db.Model):
         return "User: %s" %str(self.username)
 
 class Blog(db.Model):
-    __tablename__ = 'blogs'
+    __tablename__='post'
     id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(255),nullable=False)
     content = db.Column(db.Text(),nullable=False)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    comment = db.relationship('Comment', backref='blog', lazy='dynamic')
+    # comment = db.relationship('Comment', backref='blogs', lazy='dynamic')
 
     def save(self):
         db.session.add(self)
@@ -57,7 +57,7 @@ class Blog(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def get_blog(id):
+    def get_post(id):
         blog = Blog.query.filter_by(id=id).first()
 
         return blog
@@ -71,7 +71,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     comment = db.Column(db.String)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
-    blog_id = db.Column(db.Integer,db.ForeignKey("blogs.id"))
+    blog_id = db.Column(db.Integer,db.ForeignKey("post.id"))
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
     def save(self):
@@ -90,32 +90,32 @@ class Comment(db.Model):
     def __repr__(self):
         return f'Comment {self.comment}'
 
-class Upvote(db.Model):
-    __tablename__ = 'upvotes'
+# class Upvote(db.Model):
+#     __tablename__ = 'upvotes'
 
-    id = db.Column(db.Integer,primary_key=True)
-    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    pitch_id = db.Column(db.Integer,db.ForeignKey('blog.id'))
+#     id = db.Column(db.Integer,primary_key=True)
+#     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+#     pitch_id = db.Column(db.Integer,db.ForeignKey('post.id'))
     
 
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
+#     def save(self):
+#         db.session.add(self)
+#         db.session.commit()
 
-    @classmethod
-    def get_upvotes(cls,id):
-        upvote = Upvote.query.filter_by(pitch_id=id).all()
-        return upvote
+#     @classmethod
+#     def get_upvotes(cls,id):
+#         upvote = Upvote.query.filter_by(pitch_id=id).all()
+#         return upvote
 
 
-    def __repr__(self):
-        return f'{self.user_id}:{self.pitch_id}'
-class Downvote(db.Model):
-    __tablename__ = 'downvotes'
+#     def __repr__(self):
+#         return f'{self.user_id}:{self.pitch_id}'
+# class Downvote(db.Model):
+#     __tablename__ = 'downvotes'
 
-    id = db.Column(db.Integer,primary_key=True)
-    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    pitch_id = db.Column(db.Integer,db.ForeignKey('blog.id'))
+#     id = db.Column(db.Integer,primary_key=True)
+#     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+#     pitch_id = db.Column(db.Integer,db.ForeignKey('post.id'))
             
 
 class Subscriber(db.Model):

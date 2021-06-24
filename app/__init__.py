@@ -16,7 +16,7 @@ photos = UploadSet('photos',IMAGES)
 
 
 
-def create_app():
+def create_app(app):
     app = Flask(__name__)
     app.config.from_object(Config)
     from .auth import auth as authentication_blueprint

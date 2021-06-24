@@ -4,8 +4,7 @@ class Config:
     general config parent class
     """
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    # SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2-binary://dennis:Kimani123#@localhost/deman'
-    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://dennis:Kimani123#@localhost/blogs'
+    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://dennis:Kimani123#@localhost/posting'
     UPLOADED_PHOTOS_DEST = 'app/static/photos'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -22,13 +21,14 @@ class ProdConfig(Config):
     prod config child class
     """
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
-    if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
-        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace(
-            "postgres://", "postgresql://")
+    # if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+    #     SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace(
+    #         "postgres://", "postgresql://")
 class DevConfig(Config):
     """
     dev config child class
     """
+    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://dennis:Kimani123#@localhost/posting'
     DEBUG = True
 
 config_options={
