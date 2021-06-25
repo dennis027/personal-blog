@@ -1,3 +1,4 @@
+
 from flask import render_template,redirect,url_for,abort,request,flash
 from app.main import main
 from app.models import User,Blog,Comment,Subscriber
@@ -8,7 +9,7 @@ from flask_login import login_required,current_user
 from ..email import mail_message
 import secrets
 import os
-from PIL import Image
+# from PIL import Image
 
 @main.route('/')
 def index():
@@ -46,8 +47,8 @@ def profile():
         form.username.data = current_user.username
         form.email.data = current_user.email
         form.bio.data = current_user.bio
-    profile_pic_path = url_for('static',filename = 'photos/'+ current_user.profile_pic_path) 
-    return render_template('profile/profile.html', profile_pic_path=profile_pic_path, form = form)
+  
+    return render_template('profile/profile.html', form = form)
 
 @main.route('/user/<name>/updateprofile', methods = ['POST','GET'])
 @login_required
@@ -141,4 +142,3 @@ def user_posts(username):
     page = request.args.get('page',1, type = int )
     blogs = Blog.query.filter_by(user=user).order_by(Blog.posted.desc()).paginate(page = page, per_page = 4)
     return render_template('userposts.html',blogs=blogs,user = user)
-
