@@ -21,9 +21,10 @@
                                     <p id="usern"><a href="{{url_for('main.user_posts',username = blog.user.username)}}"><span  style="color: blue"><strong>{{blog.user.username | title}}</strong></span> </a> </p> 
                             </div>
                             <div class="col-md-10 pr-4 d-justify userblog">
-                                <p>Posted on : {{blog.posted.strftime('%d-%m-%Y')}}</p>
+                                
                                 <h4><a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title | upper}}</a></h4>
                                 <p>{{blog.content}}</p>
+                                <p>Created on : {{blog.posted.strftime('%d-%m-%Y')}}</p>
                                 <p> <a class="btn btn-sm btn-info" href="{{url_for('main.blog',id = blog.id)}}" > Comment</a> {{blog.comment.count()}} Comments</p>
                                 
                             </div>
@@ -46,33 +47,37 @@
                 {% endfor %}  
 
             </div>
-            <div class="col-md-4">
-                <div class="container">
-                    <div class="card cardquote">
-                        <div class="card-title">
-                            <h4>A quote by: <span style="color: rgb(3, 3, 3)">{{quote.author}}</span> </h4>
-                        </div>
-                        <p class="card-text">{{quote.quote}}</p>
+            
+        </div>
+        <div class="row">
+        <div class="col-md-12">
+            <div class="container">
+                <div class="card cardquote">
+                    <div class="card-title">
+                        <h4>A quote by: <span style="color: rgb(3, 3, 3)">{{quote.author}}</span> </h4>
                     </div>
-                </div>
-                <div class="container-fluid">
-                    {% for message in get_flashed_messages() %}
-                    <div class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    {{ message }}
-                    </div>
-                    {% endfor %}
-                    <form class="form-inline ml-2" action="{{url_for('main.subscribe')}}" method="POST">
-                        <div class="md-form form-group">
-                            <label class="white-color">Email Address...</label>
-                            <input type="email"  class="form-control " name ="subscriber" required>
-                        </div>
-                        <div class="md-form form-group">
-                            <button class="btn btn-sm btn-outline-info" id="subs">Subscribe</button>
-                        </div>
-                    </form>
+                    <p class="card-text">{{quote.quote}}</p>
                 </div>
             </div>
+            <div class="container-fluid">
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+                </div>
+                {% endfor %}
+                <h4>Did you Enjoy The Blog or would like to be notified when a new one is posted Kindly Subscribe add your email below</h4>
+                <form class="form-inline ml-2" action="{{url_for('main.subscribe')}}" method="POST">
+                    <div class="md-form form-group">
+                        <label class="white-color">Email Address...</label>
+                        <input type="email"  class="form-control " name ="subscriber" required>
+                    </div>
+                    <div class="md-form form-group">
+                        <button class="btn btn-sm btn-outline-info" id="subs">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         </div>
     </div>
 
