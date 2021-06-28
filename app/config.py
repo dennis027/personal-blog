@@ -4,7 +4,7 @@ class Config:
     general config parent class
     """
     SECRET_KEY = os.environ.get('SECRET_KEY')
-  
+    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://moringa:Access@localhost/posting'
     UPLOADED_PHOTOS_DEST = 'app/static/photos'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -27,7 +27,7 @@ class DevConfig(Config):
     """
     dev config child class
     """
-    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://dennis:Kimani123#@localhost/posting'
+    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://moringa:Access@localhost/posting'
     DEBUG = True
 
 config_options={
