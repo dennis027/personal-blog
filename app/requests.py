@@ -1,7 +1,27 @@
-import requests,json
+# import requests,json
 
-def get_quotes():
-    response = requests.get('http://quotes.stormconsultancy.co.uk/random.json')
-    if response.status_code == 200:
-        quote = response.json()
+# def get_quotes():
+#     response = requests.get('http://quotes.stormconsultancy.co.uk/random.json')
+#     if response.status_code == 200:
+#         quote = response.json()
+#         return quote
+
+import urllib.request,json
+from .models import Quote
+
+quote_url = "http://quotes.stormconsultancy.co.uk/random.json"
+
+
+def get_random_quote():
+ 
+
+    with urllib.request.urlopen(quote_url) as url:
+        random_quote_data=url.read()
+        random_quote_response= json.loads(random_quote_data)
+
+        author=random_quote_response.get('author')
+        quote=random_quote_response.get('quote')
+
+        quote= Quote(author,quote)
+
         return quote

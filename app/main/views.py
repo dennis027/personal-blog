@@ -4,7 +4,7 @@ from app.main import main
 from app.models import User,Blog,Comment,Subscriber
 from .form import UpdateProfile,CreateBlog
 from .. import db
-from app.requests import get_quotes
+from app.requests import get_random_quote
 from flask_login import login_required,current_user
 from ..email import mail_message
 import secrets
@@ -13,7 +13,7 @@ import os
 
 @main.route('/')
 def index():
-    quotes = get_quotes()
+    quotes = get_random_quote()
     page = request.args.get('page',1, type = int )
     blogs = Blog.query.order_by(Blog.posted.desc()).paginate(page = page, per_page = 3)
     return render_template('index.html', quote = quotes,blogs=blogs)
@@ -24,10 +24,10 @@ def save_picture(form_picture):
     picture_path = os.path.join('app/static/photos', picture_filename)
     
     output_size = (200, 200)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-    return picture_filename
+    # i = Image.open(form_picture)
+    # i.thumbnail(output_size)
+    # i.save(picture_path)
+    # return picture_filename
 
 @main.route('/profile',methods = ['POST','GET'])
 @login_required

@@ -130,3 +130,12 @@ class Subscriber(db.Model):
 
     def __repr__(self):
         return f'Subscriber {self.email}'
+
+
+class Quote:
+    '''
+    Quote class define quote objects
+    '''
+    def __init__(self, author, quote):
+        self.author = author
+        self.quote = quote        
