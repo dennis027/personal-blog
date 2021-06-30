@@ -4,7 +4,7 @@ class Config:
     general config parent class
     """
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DB')
     UPLOADED_PHOTOS_DEST = 'app/static/photos'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -20,12 +20,12 @@ class ProdConfig(Config):
     """
     prod config child class
     """
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DB')
 class DevConfig(Config):
     """
     dev config child class
     """
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DB')
     DEBUG = True
 
 config_options={
